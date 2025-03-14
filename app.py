@@ -198,7 +198,6 @@ if uploaded_file is not None:
 
     # Convert annualized to monthly rate
     rf_monthly = (1 + rf_monthly) ** (1/12) - 1
-    rf_monthly
 
 
     month_end_returns['Rf Rate'] = rf_monthly['^IRX']  # Ensure alignment with month_end_returns
@@ -282,7 +281,7 @@ if uploaded_file is not None:
         'Sharpe Ratio': [sharpe_ratio_spy, sharpe_ratio_portfolio]
     }, index=['SPY', 'Portfolio'])
 
-    import statsmodels.api as sm
+    
 
 
 
@@ -433,7 +432,7 @@ if uploaded_file is not None:
     # Streamlit download button to allow the user to download the Excel file
     st.download_button(
         label="Download Excel file",
-        data=output,
+        data=download_excel,
         file_name="Portfolio_vs_SP500.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
