@@ -32,7 +32,7 @@ sp500_monthlyreturn = sp500_dailyreturn.resample('ME').agg(lambda x: (x+1).prod(
 uploaded_file = st.file_uploader("Upload your rebalancing schedule (Excel file)", type=["xlsx", "xls"])
 
 # Add a slider for the user to select transaction cost
-tx_cost = st.slider('Select Transaction Cost', 0.0, 0.2, 0.0001)  # Min: 0, Max: 0.2, Default: 0.0001
+tx_cost = st.slider('Select Transaction Cost', 0.0, 2, 0.1) * 0.01  # Min: 0, Max: 0.2, Default: 0.0001
 
 
 if uploaded_file is not None:
