@@ -123,7 +123,12 @@ if uploaded_file is not None:
 
     output = pd.merge(sp500_monthlyreturn, portfolio_returns, left_index = True, right_index = True, how = 'outer')
     output.fillna(0,inplace=True)
-    output.rename(columns={'SPY_x': 'SPY', 'SPY_y': 'SPY_Portfolio'}, inplace=True)
+
+    # Check if 'SPY_y' exists before renaming
+    if 'SPY_x' in output.columns:
+        output.rename(columns={'SPY_x': 'SPY'}, inplace=True)
+    if 'SPY_y' in output.columns:
+        output.rename(columns={'SPY_y': 'SPY_Portfolio'}, inplace=True)
 
 
     # Set initial portfolio value
