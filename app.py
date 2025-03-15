@@ -6,6 +6,7 @@ import openpyxl
 import statsmodels.api as sm
 import numpy as np
 import io
+from matplotlib.ticker import MaxNLocator  # Import MaxNLocator
 
 st.title("Portfolio vs SP500 Analysis")
 st.write("""
