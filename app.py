@@ -106,7 +106,7 @@ if uploaded_file is not None:
 
     # Create a new column 'Value' and initialize with NaN
     portfolio_returns['Portfolio Wealth Curve'] = None
-
+    print(tx_cost)
     # Set the first month's value
     portfolio_returns.iloc[0, portfolio_returns.columns.get_loc('Portfolio Wealth Curve')] = initial_value - initial_value * portfolio_returns.loc[portfolio_returns.index[0],'Turnover %'] * tx_cost
 
@@ -138,7 +138,6 @@ if uploaded_file is not None:
 
     # Set initial portfolio value
     initial_value = 10_000_000  # 10 million
-    tx_cost = 0.0001
 
     #Create a bew column 'Portfolio Wealth Curve' and initialize with NaN
     output['SPY Wealth Curve'] = None
