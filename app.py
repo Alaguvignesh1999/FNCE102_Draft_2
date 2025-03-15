@@ -245,12 +245,12 @@ if uploaded_file is not None:
 
     # Create a new DataFrame for overall monthly returns
     overall_returns = pd.DataFrame({
-        'SPY': port_full_stats['SPY Excess'],
+        'SP500': port_full_stats['SPY Excess'],
         'Portfolio': port_full_stats['Portfolio Excess']
     })
 
     # Calculate average monthly returns for SPY and Portfolio
-    avg_monthly_return_spy = overall_returns['SPY'].mean()
+    avg_monthly_return_spy = overall_returns['SP500'].mean()
     avg_monthly_return_portfolio = overall_returns['Portfolio'].mean()
 
     # Annualize the return
@@ -258,7 +258,7 @@ if uploaded_file is not None:
     annualized_return_portfolio = (1 + avg_monthly_return_portfolio) ** 12 - 1
 
     # Calculate the monthly volatility (standard deviation) for SPY and Portfolio
-    monthly_volatility_spy = overall_returns['SPY'].std()
+    monthly_volatility_spy = overall_returns['SP500'].std()
     monthly_volatility_portfolio = overall_returns['Portfolio'].std()
 
     # Annualize the volatility
@@ -279,7 +279,7 @@ if uploaded_file is not None:
         'Annualized Return': [annualized_return_spy, annualized_return_portfolio],
         'Annualized Volatility': [annualized_volatility_spy, annualized_volatility_portfolio],
         'Sharpe Ratio': [sharpe_ratio_spy, sharpe_ratio_portfolio]
-    }, index=['SPY', 'Portfolio'])
+    }, index=['SP500', 'Portfolio'])
 
     
 
@@ -376,7 +376,7 @@ if uploaded_file is not None:
 
     # Create a new dataframe to store the maximum drawdown details
     drawdown_details = pd.DataFrame({
-        'Asset': ['Portfolio', 'SPY'],
+        'Asset': ['Portfolio', 'SP500'],
         'Max Drawdown': [max_drawdown_portfolio, max_drawdown_spy],
         'Date of Max Drawdown': [date_max_drawdown_portfolio.strftime('%Y-%m-%d'), date_max_drawdown_spy.strftime('%Y-%m-%d')]
     })
