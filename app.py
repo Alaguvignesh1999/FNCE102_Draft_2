@@ -139,6 +139,7 @@ if uploaded_file is not None:
     for i in range(1, len(output)):
         #Loop through SPY and update the value
         previous_value_spy = output.iloc[i - 1]['SPY Wealth Curve']
+        print(output.columns)
         current_return_spy = output.iloc[i]['SPY']
         output.iloc[i, output.columns.get_loc('SPY Wealth Curve')] = previous_value_spy * (1 + current_return_spy)
 
