@@ -381,6 +381,9 @@ if uploaded_file is not None:
         'Date of Max Drawdown': [date_max_drawdown_portfolio.strftime('%Y-%m-%d'), date_max_drawdown_spy.strftime('%Y-%m-%d')]
     })
 
+
+    returns_display = month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve', 'Portfolio Returns', 'SPY Returns']].copy()
+
     # Create tabs
     tab1, tab2 = st.tabs(["📊 Charts", "📋 DataFrames"])
 
@@ -421,7 +424,7 @@ if uploaded_file is not None:
         st.dataframe(rebalance_data)
 
         st.write("### Portfolio vs SP500")
-        st.dataframe(month_end_returns)
+        st.dataframe(returns_display)
 
         st.write("### Annual Stats")
         st.dataframe(annual_stats)
