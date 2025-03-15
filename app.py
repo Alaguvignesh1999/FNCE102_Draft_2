@@ -399,29 +399,32 @@ if uploaded_file is not None:
     with tab1:
         st.subheader("Portfolio Performance Charts")
 
-        # Create and display the Portfolio vs SPY Wealth Curve plot
-        fig, ax = plt.subplots(figsize=(10, 6))
-        month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
-        ax.set_title("Portfolio vs SPY Wealth Curve")
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Wealth")
-        st.pyplot(fig)  
+    # Portfolio vs SPY Wealth Curve plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
+    ax.set_title("Portfolio vs SPY Wealth Curve")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Wealth")
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))  # Ensures y-axis is shown as integers
+    st.pyplot(fig)  
 
-        # Create and display the Prior Peaks plot
-        fig, ax = plt.subplots(figsize=(10, 6))
-        month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot(ax=ax)
-        ax.set_title("Prior Peaks for Portfolio and SPY")
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Value")
-        st.pyplot(fig)  
+    # Prior Peaks plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot(ax=ax)
+    ax.set_title("Prior Peaks for Portfolio and SPY")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Value")
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))  # Ensures y-axis is shown as integers
+    st.pyplot(fig)  
 
-        # Create and display the Drawdown plot
-        fig, ax = plt.subplots(figsize=(10, 6))
-        month_end_returns[['drawdown_portfolio', 'drawdown_spy']].plot(ax=ax)
-        ax.set_title("Drawdown Comparison")
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Drawdown")
-        st.pyplot(fig)  
+    # Drawdown plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['drawdown_portfolio', 'drawdown_spy']].plot(ax=ax)
+    ax.set_title("Drawdown Comparison")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Drawdown")
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))  # Ensures y-axis is shown as integers
+    st.pyplot(fig)   
 
     # 📋 DataFrames Tab
     with tab2:
