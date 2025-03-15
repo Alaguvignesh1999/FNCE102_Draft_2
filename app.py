@@ -364,11 +364,7 @@ if uploaded_file is not None:
     })
 
 
-    month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot.line()
-    # Plot prior peaks for both portfolio and SPY
-    month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot.line()
-    # Display the drawdowns
-    month_end_returns[['drawdown_portfolio', 'drawdown_spy']].plot.line()
+
 
     # For Portfolio
     max_drawdown_portfolio = month_end_returns['drawdown_portfolio'].min()
@@ -385,7 +381,68 @@ if uploaded_file is not None:
         'Date of Max Drawdown': [date_max_drawdown_portfolio.strftime('%Y-%m-%d'), date_max_drawdown_spy.strftime('%Y-%m-%d')]
     })
 
+    # Create tabs
+    tab1, tab2 = st.tabs(["📊 Charts", "📋 DataFrames"])
 
+    # 📊 Charts Tab
+    with tab1:
+        st.subheader("Portfolio Performance Charts")
+
+        # Create and display the Portfolio vs SPY Wealth Curve plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
+        ax.set_title("Portfolio vs SPY Wealth Curve")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Wealth")
+        st.pyplot(fig)  
+
+        # Create and display the Prior Peaks plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot(ax=ax)
+        ax.set_title("Prior Peaks for Portfolio and SPY")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Value")
+        st.pyplot(fig)  
+
+        # Create and display the Drawdown plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        month_end_returns[['drawdown_portfolio', 'drawdown_spy']].plot(ax=ax)
+        ax.set_title("Drawdown Comparison")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Drawdown")
+        st.pyplot(fig)  
+
+    # 📋 DataFrames Tab
+    with tab2:
+        st.subheader("Data Tables")
+
+        # Display each DataFrame
+        st.write("### Target Portfolio")
+        st.dataframe(rebalance_data)
+
+        st.write("### Portfolio vs SP500")
+        st.dataframe(month_end_returns)
+
+        st.write("### Annual Stats")
+        st.dataframe(annual_stats)
+
+        st.write("### Total Stats")
+        st.dataframe(total_stats)
+
+        st.write("### Jensen's Alpha")
+        st.dataframe(jensen_results)
+
+        st.write("### Treynor Ratio")
+        st.dataframe(treynor_df)
+
+        st.write("### Sortino Ratio")
+        st.dataframe(sortino_df)
+
+        st.write("### Information Ratio")
+        st.dataframe(information_ratio_df)
+
+        st.write("### Max Drawdown")
+        st.dataframe(drawdown_details)
 
 
 
