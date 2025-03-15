@@ -31,6 +31,10 @@ sp500_monthlyreturn = sp500_dailyreturn.resample('ME').agg(lambda x: (x+1).prod(
 # Streamlit file uploader
 uploaded_file = st.file_uploader("Upload your rebalancing schedule (Excel file)", type=["xlsx", "xls"])
 
+# Add a slider for the user to select transaction cost
+tx_cost = st.slider('Select Transaction Cost', 0.0, 0.2, 0.0001)  # Min: 0, Max: 0.2, Default: 0.0001
+
+
 if uploaded_file is not None:
     # Read the uploaded Excel file
     rebalance_data = pd.read_excel(uploaded_file, index_col='Date', parse_dates=True)
@@ -98,7 +102,7 @@ if uploaded_file is not None:
 
     # Set initial portfolio value
     initial_value = 10_000_000  # 10 million
-    tx_cost = 0.0001
+    # tx_cost = 0.0001
 
     # Create a new column 'Value' and initialize with NaN
     portfolio_returns['Portfolio Wealth Curve'] = None
