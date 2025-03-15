@@ -2,11 +2,11 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 import openpyxl
 import statsmodels.api as sm
 import numpy as np
 import io
-from matplotlib.ticker import MaxNLocator  # Import MaxNLocator
 
 st.title("Portfolio vs SP500 Analysis")
 st.write("""
@@ -400,6 +400,54 @@ if uploaded_file is not None:
     with tab1:
         st.subheader("Portfolio Performance Charts")
 
+fig, ax = plt.subplots(figsize=(10, 6))
+month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
+
+# Define a custom formatter function for large numbers
+def millions_formatter(x, pos):
+    if x >= 1e9:
+        return f'{x*1e-9:.1f}B'  # Billions with 1 decimal
+    elif x >= 1e6:
+        return f'{x*1e-6:.1f}M'  # Millions with 1 decimal
+    elif x >= 1e3:
+        return f'{x*1e-3:.1f}K'  # Thousands with 1 decimal
+    else:
+        return f'{x:.0f}'
+
+    # Apply the formatter to y-axis
+    ax.yaxis.set_major_formatter(mticker.FuncFormatter(millions_formatter))
+
+    ax.set_title("Portfolio vs SPY Wealth Curve")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Wealth")
+    st.pyplot(fig)
+
+    # Apply the same formatting to the Prior Peaks plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot(ax=ax)
+    ax.yaxis.set_major_formatter(mticker.FuncFormatter(millions_formatter))
+    ax.set_title("Prior Peaks for Portfolio and SPY")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Value")
+    st.pyplot(fig)
+
+    # For the Drawdown plot, keep percentage format
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['drawdown_portfolio', 'drawdown_spy']].plot(ax=ax)
+    ax.yaxis.set_major_formatter(mticker.PercentFormatter(1.0))
+    ax.set_title("Drawdown Comparison")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Drawdown")
+    st.pyplot(fig)
+
+
+
+
+
+
+
+
+'''
     # Portfolio vs SPY Wealth Curve plot
     fig, ax = plt.subplots(figsize=(10, 6))
     month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
@@ -426,6 +474,7 @@ if uploaded_file is not None:
     ax.set_ylabel("Drawdown")
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))  # Ensures y-axis is shown as integers
     st.pyplot(fig)   
+'''
 
     # 📋 DataFrames Tab
     with tab2:
