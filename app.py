@@ -400,19 +400,19 @@ if uploaded_file is not None:
     with tab1:
         st.subheader("Portfolio Performance Charts")
 
-fig, ax = plt.subplots(figsize=(10, 6))
-month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
+    fig, ax = plt.subplots(figsize=(10, 6))
+    month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
 
-# Define a custom formatter function for large numbers
-def millions_formatter(x, pos):
-    if x >= 1e9:
-        return f'{x*1e-9:.1f}B'  # Billions with 1 decimal
-    elif x >= 1e6:
-        return f'{x*1e-6:.1f}M'  # Millions with 1 decimal
-    elif x >= 1e3:
-        return f'{x*1e-3:.1f}K'  # Thousands with 1 decimal
-    else:
-        return f'{x:.0f}'
+    # Define a custom formatter function for large numbers
+    def millions_formatter(x, pos):
+        if x >= 1e9:
+            return f'{x*1e-9:.1f}B'  # Billions with 1 decimal
+        elif x >= 1e6:
+            return f'{x*1e-6:.1f}M'  # Millions with 1 decimal
+        elif x >= 1e3:
+            return f'{x*1e-3:.1f}K'  # Thousands with 1 decimal
+        else:
+            return f'{x:.0f}'
 
     # Apply the formatter to y-axis
     ax.yaxis.set_major_formatter(mticker.FuncFormatter(millions_formatter))
@@ -447,7 +447,7 @@ def millions_formatter(x, pos):
 
 
 
-'''
+    '''
     # Portfolio vs SPY Wealth Curve plot
     fig, ax = plt.subplots(figsize=(10, 6))
     month_end_returns[['Portfolio Wealth Curve', 'SPY Wealth Curve']].plot(ax=ax)
@@ -474,7 +474,7 @@ def millions_formatter(x, pos):
     ax.set_ylabel("Drawdown")
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))  # Ensures y-axis is shown as integers
     st.pyplot(fig)   
-'''
+    '''
 
     # 📋 DataFrames Tab
     with tab2:
