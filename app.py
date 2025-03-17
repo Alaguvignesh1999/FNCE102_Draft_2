@@ -460,7 +460,7 @@ if uploaded_file is not None:
         st.write("### Total Stats")
         st.dataframe(total_stats)
 
-        st.write("### Jensen's Alpha")
+        st.write("### Jensen's Alpha (Monthly)")
         st.dataframe(jensen_results)
 
         st.write("### Treynor Ratio")
