@@ -261,37 +261,46 @@ if uploaded_file is not None:
         'Portfolio': port_full_stats['Portfolio Excess']
     })
 
-    # Calculate average monthly returns for SPY and Portfolio
-    avg_monthly_return_spy = overall_returns['SP500'].mean()
-    avg_monthly_return_portfolio = overall_returns['Portfolio'].mean()
-
-    # Annualize the return
-    annualized_return_spy = (1 + avg_monthly_return_spy) ** 12 - 1
-    annualized_return_portfolio = (1 + avg_monthly_return_portfolio) ** 12 - 1
-
+    # Calculate geometric returns for SPY and Portfolio
+    # Convert monthly returns to growth factors (1 + return)
+    growth_factors_spy = (1 + overall_returns['SP500'])
+    growth_factors_portfolio = (1 + overall_returns['Portfolio'])
+    
+    # Calculate cumulative returns
+    cumulative_return_spy = np.prod(growth_factors_spy) - 1
+    cumulative_return_portfolio = np.prod(growth_factors_portfolio) - 1
+    
+    # Calculate the geometric average monthly return
+    n_periods = len(overall_returns)
+    geometric_monthly_return_spy = (1 + cumulative_return_spy) ** (1 / n_periods) - 1
+    geometric_monthly_return_portfolio = (1 + cumulative_return_portfolio) ** (1 / n_periods) - 1
+    
+    # Annualize the geometric return
+    annualized_return_spy = (1 + geometric_monthly_return_spy) ** 12 - 1
+    annualized_return_portfolio = (1 + geometric_monthly_return_portfolio) ** 12 - 1
+    
     # Calculate the monthly volatility (standard deviation) for SPY and Portfolio
     monthly_volatility_spy = overall_returns['SP500'].std()
     monthly_volatility_portfolio = overall_returns['Portfolio'].std()
-
+    
     # Annualize the volatility
     annualized_volatility_spy = monthly_volatility_spy * (12 ** 0.5)
     annualized_volatility_portfolio = monthly_volatility_portfolio * (12 ** 0.5)
-
-
+    
     # Calculate the average risk-free rate
     avg_rf_rate = port_full_stats['Rf Rate'].mean()
-
+    
     # Calculate the Sharpe ratio for SPY and Portfolio
     sharpe_ratio_spy = (annualized_return_spy - avg_rf_rate) / annualized_volatility_spy
     sharpe_ratio_portfolio = (annualized_return_portfolio - avg_rf_rate) / annualized_volatility_portfolio
-
-
+    
     # Create a DataFrame with all the calculated statistics
     total_stats = pd.DataFrame({
         'Annualized Return': [annualized_return_spy, annualized_return_portfolio],
         'Annualized Volatility': [annualized_volatility_spy, annualized_volatility_portfolio],
-        'Sharpe Ratio': [sharpe_ratio_spy, sharpe_ratio_portfolio]
-    }, index=['SP500', 'Portfolio'])
+        'Sharpe Ratio': [sharpe_ratio_spy, sharpe_ratio_portfolio],
+        'Cumulative Return': [cumulative_return_spy, cumulative_return_portfolio],
+    }, index=['SPY', 'Portfolio'])
 
     
 
