@@ -425,14 +425,7 @@ if uploaded_file is not None:
     ax.set_ylabel("Wealth")
     st.pyplot(fig)
 
-    # Apply the same formatting to the Prior Peaks plot
-    fig, ax = plt.subplots(figsize=(10, 6))
-    month_end_returns[['prior_peaks_portfolio', 'prior_peaks_spy']].plot(ax=ax)
-    ax.yaxis.set_major_formatter(mticker.FuncFormatter(millions_formatter))
-    ax.set_title("Prior Peaks for Portfolio and SPY")
-    ax.set_xlabel("Date")
-    ax.set_ylabel("Value")
-    st.pyplot(fig)
+
 
     # For the Drawdown plot, keep percentage format
     fig, ax = plt.subplots(figsize=(10, 6))
